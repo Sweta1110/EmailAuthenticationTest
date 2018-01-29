@@ -1,4 +1,16 @@
 <resources>
-    <string name="app_name">My Application 2</string>
-
+    <string name="app_name">MagicalMethod</string>
+    <string name="Welcome">"Welcome to Magical Methods!!"</string>
+    <string name="Hello">Login</string>
+    <string name="Forget_Password">Forget Password?</string>
+    <string name="btn_Login">Login</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_signup">"Not a member?Get registered to magicalmethods now!"</string>
+    <string name="clicking_register">"By clicking Register I accept Magical Method's privacy policy"</string>
+    <string name="btn_register">"Register"</string>
+    <string name="btn_signin">"Already Registered.Login me!"</string>
+    <string name="give_id">"Give your registered Email-Id below"</string>
+    <string name="btn_reset">"Reset Password"</string>
+    <string name="btn_back">"Back"</string>
 </resources>

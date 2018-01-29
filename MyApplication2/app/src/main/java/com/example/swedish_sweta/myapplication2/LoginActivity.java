@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -20,7 +21,6 @@ import com.google.firebase.auth.FirebaseUser;
  */
 
 public class LoginActivity extends Activity {
-
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends Activity {
         inputEmail = (EditText) findViewById(R.id.email1);
         inputPassword = (EditText) findViewById(R.id.password1);
         btnSignup = (Button) findViewById(R.id.rgt_btn1);
-        btnLogin = (Button) findViewById(R.id.sign_in_btn1);
+        btnLogin = (Button) findViewById(R.id.btn_Login);
         btnReset =(Button) findViewById(R.id.frg_password1);
 
         //Get Firebase auth instance
@@ -49,7 +49,7 @@ public class LoginActivity extends Activity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
 

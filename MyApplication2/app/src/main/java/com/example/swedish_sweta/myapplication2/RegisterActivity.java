@@ -5,10 +5,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -17,8 +17,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
-
+public class RegisterActivity extends AppCompatActivity {
+    ImageView image1;
     private EditText inputEmail, inputPassword;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private FirebaseAuth auth;
@@ -27,28 +27,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.register_activity);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
+        image1 = (ImageView) findViewById(R.id.imageView1);
+        btnSignIn = (Button) findViewById(R.id.sign_in);
+        btnSignUp = (Button) findViewById(R.id.btn_Register);
+        inputEmail = (EditText) findViewById(R.id.frg_email);
+        inputPassword = (EditText) findViewById(R.id.password);
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_btn1);
-        btnSignUp = (Button) findViewById(R.id.rgt_btn1);
-        inputEmail = (EditText) findViewById(R.id.email1);
-        inputPassword = (EditText) findViewById(R.id.password1);
-        btnResetPassword = (Button) findViewById(R.id.frg_password);
 
-        btnResetPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
-            }
-        });
 
         btnSignIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             }
         });
 
@@ -77,17 +71,17 @@ public class MainActivity extends AppCompatActivity {
 
                 //create user
                 auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                Toast.makeText(MainActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
 
                                 if (task.isSuccessful()) {
                                     sendEmailVerification();
-                                    startActivity(new Intent(MainActivity.this, AddToDatabase.class));
+                                    startActivity(new Intent(RegisterActivity.this, AddToDatabase.class));
                                     finish();
                                 } else {
-                                    Toast.makeText(MainActivity.this, "Authentication failed." + task.getException(),
+                                    Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
@@ -104,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
-                    Toast.makeText(MainActivity.this,"Check your Email for verification",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this,"Check your Email for verification",Toast.LENGTH_SHORT).show();
                     FirebaseAuth.getInstance().signOut();
                 }
             }

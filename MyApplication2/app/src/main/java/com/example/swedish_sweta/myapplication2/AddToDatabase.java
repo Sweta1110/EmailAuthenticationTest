@@ -108,7 +108,7 @@ public class AddToDatabase extends AppCompatActivity {
                     mName.setText("");
                     mcity.setText("");
                     mPhoneNum.setText("");
-                    startActivity(new Intent(AddToDatabase.this,MainActivity.class));
+                    startActivity(new Intent(AddToDatabase.this,LoginActivity.class));
                 }else{
                     toastMessage("Fill out all the fields");
                 }
