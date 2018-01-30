@@ -72,10 +72,10 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-               // progressDialog.setMessage("Please wait...");
-               // progressDialog.show();
+               progressDialog.setMessage("Please wait...");
+                progressDialog.show();
 
-                //create user
+                
                 auth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                             @Override
@@ -95,8 +95,9 @@ public class RegisterActivity extends AppCompatActivity {
 
 
 
-                                   // finish();
+                                   //finish();
                                 } else {
+                                    progressDialog.cancel();
                                     Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
