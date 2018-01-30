@@ -1,6 +1,9 @@
 package com.example.swedish_sweta.myapplication2;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class RegisterActivity extends AppCompatActivity {
     ImageView image1;
+    private ProgressDialog progressDialog;
     private EditText inputEmail, inputPassword;
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private FirebaseAuth auth;
@@ -28,6 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_activity);
+        progressDialog = new ProgressDialog(this);
 
         //Get Firebase auth instance
         auth = FirebaseAuth.getInstance();
@@ -67,7 +72,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-
+               // progressDialog.setMessage("Please wait...");
+               // progressDialog.show();
 
                 //create user
                 auth.createUserWithEmailAndPassword(email, password)
@@ -77,15 +83,26 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "createUserWithEmail:onComplete:" + task.isSuccessful(), Toast.LENGTH_SHORT).show();
 
                                 if (task.isSuccessful()) {
-                                    sendEmailVerification();
-                                    startActivity(new Intent(RegisterActivity.this, AddToDatabase.class));
-                                    finish();
+                                    progressDialog.setMessage("Registering user...");
+                                    progressDialog.show();
+                                    new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            sendEmailVerification();
+                                            startActivity(new Intent(RegisterActivity.this, AddToDatabase.class));
+                                        }
+                                    },2000);
+
+
+
+                                   // finish();
                                 } else {
                                     Toast.makeText(RegisterActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
+
 
             }
         });
@@ -105,6 +122,18 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+       /* if(newConfig.orientation== Configuration.ORIENTATION_PORTRAIT){
+            Toast.makeText(getApplicationContext(),"You are in Portrait mode",Toast.LENGTH_SHORT).show();
+
+        }
+        else if (newConfig.orientation==Configuration.ORIENTATION_LANDSCAPE){
+            Toast.makeText(getApplicationContext(),"You are in Landscape mode",Toast.LENGTH_SHORT).show();
+            
+        }*/
     }
 }
 
